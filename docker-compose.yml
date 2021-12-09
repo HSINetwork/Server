@@ -2,7 +2,7 @@ version: "3.9"
 services:
   web:
     container_name: HSINetwork-Web
-    image: node
+    image: hsinetwork-web-image
     build: "./"
     ports:
       - "80:80"

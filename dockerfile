@@ -1,9 +1,11 @@
 FROM node
 
-COPY . /app
+WORKDIR /app
 
-RUN cd /app
+COPY . .
 
 RUN npm install
 
-CMD ["npm", "start"]
+EXPOSE 80
+
+CMD [ "npm", "start" ]
