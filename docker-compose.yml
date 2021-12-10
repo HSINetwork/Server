@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  web:
+    container_name: HSINetwork-Web
+    image: hsinetwork-web-image
+    build: "./"
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    networks:
+      - hostnet
+  db:
+    container_name: HSINetwork-Database
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - internalnet
+    volumes:
+      - "DB-Data:/redis/data"
+networks:
+  hostnet: 
+      internal: false
+      name: HSINetwork-Host-Network
+  internalnet:
+      internal: true
+      name: HSINetwork-Internal-Network
+volumes:
+  DB-Data:
+    name: HSINetwork-DB-Data
