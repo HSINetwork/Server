@@ -37,6 +37,10 @@
         "semi": [
             "error",
             "never"
-        ]
-    }
+        ],
+		"@typescript-eslint/no-var-requires": [
+			"off"
+		]
+    },
+	"ignorePatterns": ["**/snowpack.config.js"]
 }

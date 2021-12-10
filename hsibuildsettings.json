@@ -1,0 +1,33 @@
+{
+	"task-order": [
+		"compile",
+		"snowpack-web",
+		"test"
+	],
+	"tasks": {
+		"compile": {
+			"sync": true,
+			"doesFail": true,
+			"commands": [
+				"npx tsc ."
+			],
+			"failText": "TypeScript compilation failed."
+		},
+		"snowpack-web": {
+			"sync": false,
+			"doesFail": true,
+			"commands": [
+				"npx snowpack build"
+			],
+			"failText": "Snowpack compilation failed."
+		},
+		"test": {
+			"sync": false,
+			"doesFail": true,
+			"failText": "One or more of the tests have failed.",
+			"commands": [
+				"npx jest"
+			]
+		}
+	}
+}
