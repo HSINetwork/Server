@@ -6,7 +6,18 @@ npmlog.info("Main", "################")
 npmlog.info("Main", "# HSI Build Tool")
 npmlog.info("Main", "################")
 npmlog.info("Main", "")
-npmlog.info("Please wait...")
+npmlog.info("Main", "Please wait...")
+function errHandle(error, origin) {
+	npmlog.error("Main", "--- ERROR ---")
+	npmlog.error("Main", "Unhandled Exception")
+	if (error.name != undefined) { npmlog.error("Main", error.name) }
+	if (error.message != undefined) { npmlog.error("Main", error.message) }
+	npmlog.error("Main")
+	npmlog.error("Main", `The stack can be found here:\n${error.stack}`)
+	if (origin != undefined) { npmlog.error("Main", `Origin: ${origin}`) }
+	process.exit(1)
+}
+process.on("uncaughtException", (error, origin) => errHandle)
 //BuildType = process.env.BuildType ?? "prod"
 const buildConfig = require("./hsibuildsettings.json")
 npmlog.level = Infinity
@@ -23,36 +34,38 @@ function EvalStatements(object) {
 		if (object.sync == true) {
 			for (let i = 0; i < object.commands.length, i++;) {
 				try {
-					let cp = child_process.execSync(object.command[i], {cwd: process.cwd, windowsHide: true})
+					let cp = child_process.spawnSync(object.command[i], {cwd: process.cwd, windowsHide: true})
 					cp.on("message", (message) => {
 						console.log(message)
 					})
 				} catch {
 					if (object.doesFail == true) {
-						npmlog.error("BCErr", object.failText + "\nPlease see logs above.")
-						break
+						errHandle(new Error(object.failText + "\nPlease see logs above."))
 					}
 				}
 			}
 		} else if (object.sync == false) {
-			for (let i = 0; i < object.commands.length, i++;) {
+			for (var i = 0; i < object.commands.length; i++) {
 				try {
-					let cp = child_process.exec(object.command[i], {cwd: process.cwd, windowsHide: true})
+					let cp = child_process.spawn(object.command[i], {cwd: process.cwd, windowsHide: true})
 					cp.on("message", (message) => {
 						console.log(message)
 					})
 				} catch {
 					if (object.doesFail == true) {
-						npmlog.error("BCErr", object.failText + "\nPlease see logs above.")
-						break
+						errHandle(new Error(object.failText + "\nPlease see logs above."))
 					}
 				}
 			}
 		}
 	} catch {
 		npmlog.error("BCErr", "The current object does not have correct commands.")
+		errHandle(new Error(`Build Command '${object.command[i]}' is invalid.`))
 	}
 }
-for (let i = 0; i < buildConfig["task-order"].length, i++;) {
+for (var i = 0; i < buildConfig["task-order"].length; i++) {
+	npmlog.info("Main", `Running task '${buildConfig["task-order"][i]}'.`)
 	EvalStatements(buildConfig.tasks[buildConfig["task-order"][i]])
+	npmlog.info("Main", `Task '${buildConfig["task-order"][i]}' completed.`)
 }
+npmlog.info("Main", "Build complete.")

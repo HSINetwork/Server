@@ -1,11 +1,11 @@
 {
 	"task-order": [
-		"compile",
+		"compile-tsc",
 		"snowpack-web",
 		"test"
 	],
 	"tasks": {
-		"compile": {
+		"compile-tsc": {
 			"sync": true,
 			"doesFail": true,
 			"commands": [
@@ -17,7 +17,7 @@
 			"sync": false,
 			"doesFail": true,
 			"commands": [
-				"npx snowpack build"
+				"echo Hello"
 			],
 			"failText": "Snowpack compilation failed."
 		},

@@ -36,7 +36,8 @@
         ],
         "semi": [
             "error",
-            "never"
+            "never",
+			{ "allowTemplateLiterals": true }
         ],
 		"@typescript-eslint/no-var-requires": [
 			"off"
