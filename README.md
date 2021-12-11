@@ -1,4 +1,4 @@
-<center>HSINetwork Server</center>
+<div align="center"><font size=72>HSINetwork Server</font></div>
 
 Welcome to the HSINetwork Server Repo!
 
