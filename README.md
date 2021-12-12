@@ -17,10 +17,9 @@ To install the HSINetwork Server, you can either use DockerHub [Not yet supporte
 ### Install from source
 
 To install from source. Simply clone this repo into your computer. and run
-``` npm install ```
 
-Once this command has completed, run
 ``` docker-compose up ```
+
 This will start the Redis server, hosted on port 6379 and the web server, hosted on port 80.
 
 It is recommended to download from the Releases page if you want stable builds. By default the HSI Build Tool will run Jest to vaildate the source code.
