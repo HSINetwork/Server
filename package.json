@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "node ./build.js",
-	"start": "node ./server/index.js"
+    "start": "node ./server/index.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/HSINetwork/Server#readme",
   "dependencies": {
-    "npmlog": "^6.0.0"
+    "npmlog": "^6.0.0",
+    "postcss": "^8.4.5"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",

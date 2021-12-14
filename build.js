@@ -9,7 +9,6 @@ npmlog.info("Main", "################")
 npmlog.info("Main", "")
 npmlog.info("Main", "Please wait...")
 
-/*
 function errHandle(error, origin) {
 	npmlog.error("Main", "--- ERROR ---")
 	npmlog.error("Main", "Unhandled Exception")
@@ -21,7 +20,6 @@ function errHandle(error, origin) {
 	process.exit(1)
 }
 process.on("uncaughtException", (error, origin) => errHandle)
-*/
 
 const buildConfig = require("./hsibuildsettings.json")
 npmlog.level = Infinity
@@ -51,17 +49,17 @@ async function EvalStatements(object, name) {
 		errHandle(new Error(`The current task does not have the correct structure.`))
 	}
 	if (object.sync == true) {
-		for (let i = 0; i < object.commands.length; i++) {
-			trackers[name].t[object.commands[i]].info(name, `Executing ${object.commands[i]}`)
-			await EvalStatement(object.commands[i])
-			trackers[name].t[object.commands[i]].finish()
-		}
+		object.commands.forEach(element => {
+			trackers[name].t[element].info(name, `Executing ${[element]}`)
+			EvalStatement(element)
+			trackers[name].t[element].finish()
+		});
 	} else if (object.sync == false) {
-		for (let i = 0; i < object.commands.length; i++) {
-			trackers[name].t[object.commands[i]].info(name, `Executing ${object.commands[i]}`)
-			EvalStatement(object.commands[i])
-			trackers[name].t[object.commands[i]].finish()
-		}
+		object.commands.forEach(element => {
+			trackers[name].t[element].info(name, `Executing ${[element]}`)
+			EvalStatement(element)
+			trackers[name].t[element].finish()
+		});
 	}
 
 }
@@ -76,7 +74,7 @@ for (let i = 0; i < buildConfig["task-order"].length; i++) {
 	let objectName = buildConfig["task-order"][i]
 	let object = buildConfig.tasks[buildConfig["task-order"][i]]
 	trackers[objectName] = { tg: npmlog.newGroup(objectName), t: [] }
-	for (let v = 0; v < object.commands.length; i++) {
+	for (let v = 0; v < object.commands.length; v++) {
 		trackers[objectName].t[object.commands[v]] = trackers[objectName].tg.newItem(object.commands[v])
 	}
 }
@@ -87,6 +85,10 @@ for (let i = 0; i < buildConfig["task-order"].length; i++) {
 	let buildConfig = require("./hsibuildsettings.json")
 	let objectName = buildConfig["task-order"][i]
 	let object = buildConfig.tasks[buildConfig["task-order"][i]]
+	if (buildConfig["task-order"].length == 0) {
+		npmlog.error("Main", "There doesn't appear to be any tasks to execute, this configuration is not supported, the application will now be terminated.")
+		break
+	}
 	trackers[objectName].tg.info(objectName, `Running task '${objectName}'.`)
 	EvalStatements(object, objectName)
 	trackers[objectName].tg.info(objectName, `Task '${objectName}' completed.`)
