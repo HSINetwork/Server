@@ -1,7 +1,8 @@
 {
 	"task-order": [
-		"build-server",
-		"test"
+		"test",
+		"build-resources",
+		"build-server"
 	],
 	"tasks": {
 		"test": {
@@ -19,6 +20,14 @@
 				"npx tsc"
 			],
 			"failText": "Typescript Compilation failed."
+		},
+		"build-resources": {
+			"sync": true,
+			"doesFail": true,
+			"commands": [
+				"node ./CDN/build.js"
+			],
+			"failText": "Failed to build web resources."
 		}
 	}
 }
