@@ -3,9 +3,12 @@ const process = require("process")
 const child_process = require("child_process")
 
 npmlog.heading = "HSI Build Tool"
-npmlog.info("Main", "################")
-npmlog.info("Main", "# HSI Build Tool")
-npmlog.info("Main", "################")
+npmlog.info("Main", "██████████████████")
+npmlog.info("Main", "█                █░")
+npmlog.info("Main", "█ HSI Build Tool █░")
+npmlog.info("Main", "█                █░")
+npmlog.info("Main", "██████████████████░")
+npmlog.info("Main", " ░░░░░░░░░░░░░░░░░░")
 npmlog.info("Main", "")
 npmlog.info("Main", "Please wait...")
 
