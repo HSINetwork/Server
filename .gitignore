@@ -1,6 +1,11 @@
+node_modules
+cypress
+tests
 dist
+coverage
+build.js
+snowpack.config.js
 build
-server
 
 # Logs
 logs
