@@ -3,8 +3,6 @@ cypress
 tests
 dist
 coverage
-build.js
-snowpack.config.js
 build
 
 # Logs
