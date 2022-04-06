@@ -1,4 +1,4 @@
-FROM node
+FROM node:17.8-bullseye-slim
 
 WORKDIR /app
 
